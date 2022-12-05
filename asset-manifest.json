@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/DragandDropReact/static/css/main.59fde17f.css",
-    "main.js": "/DragandDropReact/static/js/main.afef1e94.js",
+    "main.js": "/DragandDropReact/static/js/main.2f8c3e7b.js",
     "index.html": "/DragandDropReact/index.html",
     "main.59fde17f.css.map": "/DragandDropReact/static/css/main.59fde17f.css.map",
-    "main.afef1e94.js.map": "/DragandDropReact/static/js/main.afef1e94.js.map"
+    "main.2f8c3e7b.js.map": "/DragandDropReact/static/js/main.2f8c3e7b.js.map"
   },
   "entrypoints": [
     "static/css/main.59fde17f.css",
-    "static/js/main.afef1e94.js"
+    "static/js/main.2f8c3e7b.js"
   ]
 }
