@@ -35,6 +35,7 @@ function App() {
       dragItemVar.current=e.target.textContent;
    }
    const handleTouchMove=(e)=>{
+      console.log("Asdf");
       let x=e.touches["0"].clientX;
       let y=e.touches["0"].clientY;
       setPosX(x-50);
@@ -83,8 +84,8 @@ function App() {
                   onDragStart={handleDragItem}
                   onTouchStart={handleDragItem}
                   onTouchMove={handleTouchMove}
-                  onDragEnd={handleDragEnd}
                   onTouchEnd={handleDragEnd}
+                  onDragEnd={handleDragEnd}
                   key={item} className='drop'>{item}</li>
                   <li className='drop' style={{display :`${isNone==false? "none" : "flex"}` ,position : "absolute",left:`${posX}px`,top : `${posY}px`,zIndex :100}}>{dropVal}</li>
                   </>
