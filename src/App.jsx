@@ -51,7 +51,8 @@ function App() {
 
    const handleDragEnd = (e)=>{
       setIsNone(false);
-         if(help==false)return;
+      console.log(help);
+      if(help==false)return;
          setDropStack([...dropstack,{
             id : new Date().getTime(),
             name : dragItemVar.current
@@ -62,11 +63,10 @@ function App() {
    }
 
    const handleDragExit = (e) => {
+      drager.current.classList.remove("app-2-hover");
       setTimeout(()=>{
-         drager.current.classList.remove("app-2-hover");
          setHelp(false);
-      },500)
-      
+      },2000)
       
    }
    
@@ -83,8 +83,8 @@ function App() {
                   onDragStart={handleDragItem}
                   onTouchStart={handleDragItem}
                   onTouchMove={handleTouchMove}
-                  onTouchEnd={handleDragEnd}
                   onDragEnd={handleDragEnd}
+                  onTouchEnd={handleDragEnd}
                   key={item} className='drop'>{item}</li>
                   <li className='drop' style={{display :`${isNone==false? "none" : "flex"}` ,position : "absolute",left:`${posX}px`,top : `${posY}px`,zIndex :100}}>{dropVal}</li>
                   </>
