@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/DragandDropReact/static/css/main.59fde17f.css",
+    "main.js": "/DragandDropReact/static/js/main.afef1e94.js",
+    "index.html": "/DragandDropReact/index.html",
+    "main.59fde17f.css.map": "/DragandDropReact/static/css/main.59fde17f.css.map",
+    "main.afef1e94.js.map": "/DragandDropReact/static/js/main.afef1e94.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.59fde17f.css",
+    "static/js/main.afef1e94.js"
+  ]
+}
