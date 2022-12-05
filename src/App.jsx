@@ -5,6 +5,10 @@ import DeleteSvg from './DeleteSvg';
 
 function App() {
    const [dropitem,setDropItem]=useState(["A","B","C"])
+   const [posX,setPosX]=useState(0);
+   const [posY,setPosY]=useState(0);
+   const [isNone,setIsNone]=useState(false);
+   const [dropVal,setDropVal]=useState('A');
    const [dropstack,setDropStack]=useState([
       {id:1,name : "A"},
       {id:2,name : "B"},
@@ -14,6 +18,7 @@ function App() {
       {id:6,name : "A"},
    ])
 
+   const [help,setHelp]=useState(false);
  
 
    const dragItemVar = useRef();
@@ -26,46 +31,72 @@ function App() {
       setDropStack(newDropStack);
    }
    const handleDragItem = (e) => {
+      // console.log("Start");
       dragItemVar.current=e.target.textContent;
    }
+   const handleTouchMove=(e)=>{
+      let x=e.touches["0"].clientX;
+      let y=e.touches["0"].clientY;
+      setPosX(x-50);
+      setPosY(y-50);
+      setIsNone(true);
+      setDropVal(e.target.textContent)
+      setHelp(true);
+   }
+  
    const handleDragEnter = (e) => {
       drager.current.classList.add("app-2-hover");
+      setHelp(true);
    }
 
    const handleDragEnd = (e)=>{
+      setIsNone(false);
+         if(help==false)return;
          setDropStack([...dropstack,{
             id : new Date().getTime(),
             name : dragItemVar.current
          }])
 
          dragItemVar.current=null;
+         
    }
 
    const handleDragExit = (e) => {
-      drager.current.classList.remove("app-2-hover");
+      setTimeout(()=>{
+         drager.current.classList.remove("app-2-hover");
+         setHelp(false);
+      },500)
+      
       
    }
    
   return (
-    <div className="app" ref={drager}>
+    <div className="app">
        <div className="app-1" >
           <h1>Draggables</h1>
           <ul className='app-1-items'>
             {dropitem.map(item =>{
                return (
+                  <>
                   <li 
                   draggable
                   onDragStart={handleDragItem}
+                  onTouchStart={handleDragItem}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleDragEnd}
                   onDragEnd={handleDragEnd}
                   key={item} className='drop'>{item}</li>
+                  <li className='drop' style={{display :`${isNone==false? "none" : "flex"}` ,position : "absolute",left:`${posX}px`,top : `${posY}px`,zIndex :100}}>{dropVal}</li>
+                  </>
                );
             })}
           </ul>
        </div>
-       <div className="app-2"  >
+       <div className="app-2" ref={drager} >
           <div className="app-2-inner" 
           
           onDragEnter={handleDragEnter}
+          
           onDragExit={handleDragExit}
           
           >
