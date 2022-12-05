@@ -1,0 +1,44 @@
+.app-1{
+    user-select: none; /* Standard syntax */
+    width: 25%;
+    height: 100%;
+    /* border:1px solid red; */
+  }
+  .app-1 h1{
+    font-size: 25px;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: none;
+    overflow-y: auto;
+    font-weight: 300;
+  }
+  .app-1 ul{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+  
+  
+  }
+  .app-1 li{
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    cursor: pointer;
+  }
+  .drop{
+    display: flex;
+    /* border: 1px solid red; */
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color:#000;
+    background-color: #D8D9D8;
+    border-radius:100%;
+  }

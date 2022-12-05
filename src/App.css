@@ -8,113 +8,23 @@
   background-color: #1C1C1C;
   color: #A5A6A6;
 }
-.app-1{
-  user-select: none; /* Standard syntax */
-  width: 30%;
-  height: 100%;
-  /* border:1px solid black; */
-}
-.app-1 h1{
-  font-size: 25px;
-  width: 100%;
-  height: 10%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-x: none;
-  overflow-y: auto;
-  font-weight: 300;
-}
-.app-1 ul{
-  width: 100%;
-  height: 70%;
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  justify-content: center;
-  align-items: center;
 
-
-}
-.app-1 li{
-  width: 100px;
-  height: 100px;
-  margin: 10px;
-  cursor: pointer;
-}
-.drop{
-  display: flex;
-  /* border: 1px solid red; */
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  color:#000;
-  background-color: #D8D9D8;
-  border-radius:100%;
-  
-
-}
 .app-2{
-  width: 35%;
+  width: 430px;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   user-select: none; /* Standard syntax */
-  /* border:1px solid black; */
+  /* border:1px solid red; */
 }
 .app-2-inner{
 
   /* background-color: red; */
   width: 100%;
   height: 250px;
-  padding: 20px;
 }
 .app-2-hover{
   opacity: 0.5;
   
-}
-.app-3{
-  width: 30%;
-  height: 730px;
-  /* border:1px solid black; */
-  
-}
-
-.app-3 h1{
-  font-size: 25px;
-  width: 100%;
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-weight: 300;
-}
-.app-3 ul{
-  /* border: 1px solid red; */
-  overflow-y: scroll;
-  width: 100%;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  align-items: center;
-  padding: 45px 0px;
-}
-.app-3 ul li{
-  width: 280px;
-  height: 50px;
-  margin: 5px;
-  font-size: 25px;
-
-}
-.stack{
-  /* border: 1px solid red; */
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #2B2A2B;
-  border-radius: 5px;
-
 }

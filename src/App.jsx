@@ -1,122 +1,129 @@
+
 import './App.css';
-import {useState,useRef} from 'react';
+import { useState,useRef } from 'react';
 import Dropbox from './Dropbox';
-import DeleteSvg from './DeleteSvg';
+import Dragabble from './components/Dragabble';
+import Dropstack from './components/Dropstack';
+function MiddleDropBox({ dropstack ,handleDragOver,handleDrop,dragZone,handleDragEnter,handleDragExit}) {
+   return (
+      <div className="app-2" 
+      >
+         <div className="app-2-inner"
+            droppable
+            onDragOver={(e)=>handleDragOver(e)} 
+            onDrop={(e) => handleDrop(e)}
+            ref={dragZone}
+            onDragEnter={handleDragEnter}
+            onDragExit={handleDragExit}
+         >
+            <Dropbox count={dropstack.length} />
+         </div>
+      </div>
+   );
+}
 
 function App() {
-   const [dropitem,setDropItem]=useState(["A","B","C"])
-   const [posX,setPosX]=useState(0);
-   const [posY,setPosY]=useState(0);
-   const [isNone,setIsNone]=useState(false);
-   const [dropVal,setDropVal]=useState('A');
-   const [dropstack,setDropStack]=useState([
-      {id:1,name : "A"},
-      {id:2,name : "B"},
-      {id:3,name : "C"},
-      {id:4,name : "B"},
-      {id:5,name : "A"},
-      {id:6,name : "A"},
+   const [dropitem, setDropItem] = useState(["A", "B", "C"])
+   const [dropstack, setDropStack] = useState([
+      { id: 1, name: "A" },
+      { id: 2, name: "B" },
+      { id: 3, name: "C" },
+      { id: 4, name: "B" }
    ])
+   const [dragTouch,setDragTouch]=useState({
+      display : false,
+      posX:0,
+      posY:0,
+      val :'X'
+   });
 
-   const [help,setHelp]=useState(false);
- 
+   const dragZone = useRef();
 
-   const dragItemVar = useRef();
-   const drager = useRef();
-  
    const handleStackDelete = (e) =>{
       const stack_id = e.target.id
       // console.log(stack_id);
       let newDropStack=dropstack.filter(stack => stack.id != stack_id);
       setDropStack(newDropStack);
    }
-   const handleDragItem = (e) => {
-      // console.log("Start");
-      dragItemVar.current=e.target.textContent;
+
+   const handleDragStart = (e,item)=>{
+      e.dataTransfer.setData("stackitem",item);
+      // console.log("Drag starts");
    }
-   const handleTouchMove=(e)=>{
-      console.log("Asdf");
+   const handleDragOver = (e) => {
+      e.preventDefault();
+      // console.log("Dragging over");
+   }
+   const handleDrop = (e) => {
+      let curr_item = e.dataTransfer.getData("stackitem");
+      setDropStack([...dropstack,{
+         id : new Date().getTime(),
+         name : curr_item
+      }]);
+      dragZone.current.classList.remove("app-2-hover");
+      // console.log("Dropped");
+   }
+   const handleDragEnter = (e) => {
+      dragZone.current.classList.add("app-2-hover");
+   }
+   const handleDragExit =  (e) => {
+      dragZone.current.classList.remove("app-2-hover");
+   }
+
+   const handleTouchStart = (e,item) => {
+      
+      console.log("Touch start");
+   }
+   const handleTouchMove = (e) => {
+      e.preventDefault();
       let x=e.touches["0"].clientX;
       let y=e.touches["0"].clientY;
-      setPosX(x-50);
-      setPosY(y-50);
-      setIsNone(true);
-      setDropVal(e.target.textContent)
-      setHelp(true);
+      setDragTouch({
+         display : true,
+         posX : x-50,
+         posY : y-50,
+         val : e.target.textContent
+      });
    }
-  
-   const handleDragEnter = (e) => {
-      drager.current.classList.add("app-2-hover");
-      setHelp(true);
-   }
-
-   const handleDragEnd = (e)=>{
-      setIsNone(false);
-      console.log(help);
-      if(help==false)return;
-         setDropStack([...dropstack,{
-            id : new Date().getTime(),
-            name : dragItemVar.current
-         }])
-
-         dragItemVar.current=null;
-         
-   }
-
-   const handleDragExit = (e) => {
-      drager.current.classList.remove("app-2-hover");
-      setTimeout(()=>{
-         setHelp(false);
-      },2000)
+   const handleTouchEnd = (e) => {
+      e.preventDefault();
+      setDragTouch({
+         display : false,
+         posX : 0,
+         posY : 0,
+         val : ''
+      });
       
    }
    
-  return (
-    <div className="app">
-       <div className="app-1" >
-          <h1>Draggables</h1>
-          <ul className='app-1-items'>
-            {dropitem.map(item =>{
-               return (
-                  <>
-                  <li 
-                  draggable
-                  onDragStart={handleDragItem}
-                  onTouchStart={handleDragItem}
-                  onTouchMove={handleTouchMove}
-                  onTouchEnd={handleDragEnd}
-                  onDragEnd={handleDragEnd}
-                  key={item} className='drop'>{item}</li>
-                  <li className='drop' style={{display :`${isNone==false? "none" : "flex"}` ,position : "absolute",left:`${posX}px`,top : `${posY}px`,zIndex :100}}>{dropVal}</li>
-                  </>
-               );
-            })}
-          </ul>
-       </div>
-       <div className="app-2" ref={drager} >
-          <div className="app-2-inner" 
-          
-          onDragEnter={handleDragEnter}
-          
-          onDragExit={handleDragExit}
-          
-          >
-            <Dropbox count={dropstack.length}/>
-          </div>
-       </div>
-       <div className="app-3">
-          <h1>Drop Stack</h1>
-          <ul className='app-3-drop'>
-             {dropstack.map(stack => {
-                return (
-                   <li  key={stack.id} className='stack'><span>{stack.name}</span> Dropped <DeleteSvg id={stack.id} handleStackDelete={handleStackDelete} /></li>
-                );
-             })}
-          </ul>
-       </div>
-       
-    </div>
-  );
+
+   return (
+      <div className="app">
+         <Dragabble
+            dropitem={dropitem}
+            handleDragStart={handleDragStart}
+            handleTouchStart={handleTouchStart}
+            handleTouchMove={handleTouchMove}
+            handleTouchEnd={handleTouchEnd}
+            dragTouch={dragTouch}
+         />
+
+         <MiddleDropBox
+            dropstack={dropstack}
+            handleDragOver={handleDragOver}
+            handleDrop={handleDrop}
+            dragZone={dragZone}
+            handleDragEnter={handleDragEnter}
+            handleDragExit={handleDragExit}
+         />
+
+         <Dropstack
+            dropstack={dropstack}
+            handleStackDelete={handleStackDelete}
+         />
+
+      </div>
+   );
 }
 
 export default App;
