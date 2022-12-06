@@ -15,6 +15,7 @@ function MiddleDropBox({ dropstack ,handleDragOver,handleDrop,dragZone,handleDra
             ref={dragZone}
             onDragEnter={handleDragEnter}
             onDragExit={handleDragExit}
+            
          >
             <Dropbox count={dropstack.length} />
          </div>
@@ -35,6 +36,11 @@ function App() {
       posX:0,
       posY:0,
       val :'X'
+   });
+   const [finalLoaction,setFinalLocation]=useState({
+      x:0,
+      y:0,
+      val : 'X'
    });
 
    const dragZone = useRef();
@@ -72,12 +78,18 @@ function App() {
 
    const handleTouchStart = (e,item) => {
       
-      console.log("Touch start");
+      // console.log("Touch start");
    }
    const handleTouchMove = (e) => {
-      e.preventDefault();
+      
+      
       let x=e.touches["0"].clientX;
       let y=e.touches["0"].clientY;
+      setFinalLocation({
+         x : x,
+         y : y,
+         val : e.target.textContent
+      });
       setDragTouch({
          display : true,
          posX : x-50,
@@ -87,16 +99,21 @@ function App() {
    }
    const handleTouchEnd = (e) => {
       e.preventDefault();
+      
       setDragTouch({
          display : false,
          posX : 0,
          posY : 0,
          val : ''
       });
+      if(finalLoaction.x >= 150 && finalLoaction.x <= 150+300 && finalLoaction.y >= 300 && finalLoaction.y <= 300+170+50){
+         setDropStack([...dropstack,{
+            id : new Date().getTime(),
+            name : finalLoaction.val
+         }]);
+      }
       
    }
-   
-
    return (
       <div className="app">
          <Dragabble
@@ -115,6 +132,7 @@ function App() {
             dragZone={dragZone}
             handleDragEnter={handleDragEnter}
             handleDragExit={handleDragExit}
+            
          />
 
          <Dropstack
